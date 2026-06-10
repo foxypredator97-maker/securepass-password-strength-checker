@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SecurePass</title>
+
+    <link rel="stylesheet"
+    href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>🔐 SecurePass</h1>
+
+    <p>Advanced Password Strength Checker</p>
+
+    <form method="POST">
+
+        <input
+id="password"
+type="password"
+name="password"
+placeholder="Enter Password"
+required>
+
+        <br><br>
+<button type="button" onclick="togglePassword()">
+    Show / Hide Password
+    </button>
+        <button type="button" onclick="generatePassword()">
+    Generate Password
+</button>
+<button type="button" onclick="copyPassword()">
+    Copy Password
+</button>
+
+<button type="submit">
+    Check Strength
+</button>
+
+    </form>
+
+    {% if strength %}
+
+        {% if strength == "Weak" %}
+    <h2 style="color:red;">
+        Password Strength: {{ strength }}
+    </h2>
+
+{% elif strength == "Medium" %}
+    <h2 style="color:orange;">
+        Password Strength: {{ strength }}
+    </h2>
+
+{% else %}
+    <h2 style="color:green;">
+        Password Strength: {{ strength }}
+    </h2>
+{% endif %}
+        <h3>
+    Score: {{ score }}/100
+        </h3>
+        <h3>
+    Entropy: {{ entropy }} bits
+</h3>
+       <div class="meter">
+
+    <div class="fill"
+         style="width: {{ score }}%;
+                background: {{ color }};">
+    </div>
+
+</div>
+
+{% if feedback %}
+
+<h3>Suggestions:</h3>
+
+<ul>
+{% for item in feedback %}
+    <li>{{ item }}</li>
+{% endfor %}
+</ul>
+
+{% endif %}
+
+{% endif %}
+
+</div>
+<script
+src="{{ url_for('static', filename='script.js') }}">
+</script>
+</body>
+</html>
